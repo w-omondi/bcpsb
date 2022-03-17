@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { navigate } from "@reach/router";
+import { Header, Footer } from "./HeaderAndFooter";
 
 export class Certifications extends Component {
   constructor(props) {
@@ -57,6 +58,8 @@ export class Certifications extends Component {
 
   render() {
     return (
+      <>
+      <Header/>
       <div className="main-wrapper">
         <h3>3. Professional Certifications.</h3>
         <div className="input-wrapper">
@@ -155,6 +158,8 @@ export class Certifications extends Component {
           </table>
         </div>
       </div>
+      <Footer/>
+      </>
     );
   }
 }

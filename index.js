@@ -61,7 +61,12 @@ app.post("/job-details", updateJobDetails);
 //handles file uploads and downloads
 app.post("/upload", upload, (req, res) => {
   console.log(req.file.filename);
-  res.end();
+  let q = `UPDATE applicants SET upload ='${req.file.filename}' WHERE applicant_id=${req.body.applicantId};`;
+  db.query(q, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    res.send(JSON.stringify(result));
+  });
 });
 app.get(`/download-zip/:zipPath`, zipDownload);
 

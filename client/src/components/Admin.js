@@ -24,14 +24,14 @@ export class Admin extends Component {
     !limit || !date
       ? this.Applications()
       : axios
-        .get(`/filter-applications/${date}/${limit}`)
-        .then((response) => {
-          console.log(response.data);
-          this.setState({ applications: response.data });
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
+          .get(`/filter-applications/${date}/${limit}`)
+          .then((response) => {
+            console.log(response.data);
+            this.setState({ applications: response.data });
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
   };
 
   Applications = () => {
@@ -53,15 +53,17 @@ export class Admin extends Component {
     const columns = [
       "timestamp",
       "salutation_title",
+      "firstname",
+      "middlename",
+      "lastname",
       "email",
-      "fullname",
       "position_applied",
       "vacancy_no",
       "national_id",
-      // "date_of_birth",
       "phone",
-      "academic_certificates",
-      "academic_professional_credentials",
+      "uploads",
+      // "academic_professional_credentials",
+      // "date_of_birth",
       // "home_county",
       // "sub_county",
       // "ward",
@@ -86,7 +88,7 @@ export class Admin extends Component {
       <div className="admin">
         <AdminHeader />
         <div className="admin-tab">
-          <div className="control-wrapper" style={{ width: "70%" }}>
+          <div className="control-wrapper" style={{ width: "40%" }}>
             <div className="tabcontrol">
               <label htmlFor="limit">Limit</label>
               <input
@@ -109,15 +111,15 @@ export class Admin extends Component {
                 value={this.state.filterDate}
               />
             </div>
-            <button
+            <span
               onClick={this.clearFilter}
               style={{ textDecoration: "underline" }}
               className="check-applications"
             >
               Check applications
-            </button>
+            </span>
           </div>
-          <div className="control-wrapper" style={{ width: "30%" }}>
+          <div className="control-wrapper" style={{ width: "60%" }}>
             <CSVLink
               style={{ color: "white" }}
               data={this.state.applications}
@@ -141,14 +143,16 @@ export class Admin extends Component {
                     {new Date(colvalue.timestamp).toLocaleDateString()}{" "}
                     {new Date(colvalue.timestamp).toLocaleTimeString()}
                   </td>
+                  <td>{colvalue.salutation_title.toLowerCase()}</td>
+                  <td>{colvalue.firstname}</td>
+                  <td>{colvalue.middlename}</td>
+                  <td>{colvalue.lastname}</td>
                   <td>{colvalue.email}</td>
-                  <td>{colvalue.fullname}</td>
-                  <td>{colvalue.salutation_title}</td>
                   <td>{colvalue.position_applied}</td>
                   <td>{colvalue.vacancy_no}</td>
                   <td>{colvalue.national_id}</td>
-                  {/* <td>{colvalue.date_of_birth.split("T")[0]}</td> */}
                   <td>{colvalue.phone}</td>
+                  {/* <td>{colvalue.date_of_birth.split("T")[0]}</td> */}
                   <td>
                     {/* <button
                       onClick={() =>
@@ -164,14 +168,11 @@ export class Admin extends Component {
                     >
                       download
                     </button> */}
-                    <a
-                      href={`/download-zip/${colvalue.academic_certificates}`}
-                      download
-                    >
+                    <a href={`/download-zip/${colvalue.upload}`} download>
                       Download
                     </a>
                   </td>
-                  <td>{colvalue.academic_professional_credentials}</td>
+                  {/* <td>{colvalue.academic_professional_credentials}</td> */}
                   {/* <td>{colvalue.home_county}</td>
                 <td>{colvalue.sub_county}</td>
                 <td>{colvalue.ward}</td>

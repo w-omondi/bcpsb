@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { navigate } from "@reach/router";
 import axios from "axios";
+import { Header, Footer } from "./HeaderAndFooter";
+
 export default class JopApplication extends Component {
   constructor(props) {
     super(props);
@@ -105,88 +107,93 @@ export default class JopApplication extends Component {
         break;
     }
     return (
-      <form className="main-wrapper">
-        <h3>4. Job application details</h3>
-        <div className="input-wrapper">
-          <span>Are you currently Employed?</span>
-          <select
-            name="employed"
-            onChange={this.changeHandler}
-            id=""
-            value={this.state.employed}
-          >
-            <option value="NA">select</option>
-            <option value="no">NO</option>
-            <option value="yes">YES</option>
-          </select>
-        </div>
-        <div className="input-wrapper">
-          <span>If Yes, Kindly Indicate Your Current Employer?</span>
-          <input
-            type="text"
-            name="current_employer"
-            placeholder="Your answer"
-            required
-            onChange={this.changeHandler}
-            value={this.state.current_employer}
-          />
-        </div>
-        <div className="input-wrapper">
-          <span>Experience (Number of years)</span>
-          <input
-            type="number"
-            name="experience"
-            placeholder="Your answer"
-            onChange={this.changeHandler}
-            min={0}
-            value={this.state.experience}
-            required
-          />
-        </div>
-        <div className="input-wrapper">
-          <label htmlFor="category">Job Category</label>
-          <select
-            name="categorySelected"
-            id="category"
-            value={this.state.categorySelected}
-            onChange={this.changeHandler}
-          >
-            <option value="NA">select</option>
-            {this.state.categories.map((q, i) => (
-              <option key={i} value={q}>
-                {q}
-              </option>
-            ))}
-          </select>
-        </div>
-        {element}
-        <div className="input-wrapper">
-          <span>Vacancy no ( unique to each post)</span>
-          <input
-            type="text"
-            name="vacancy_no"
-            placeholder="Your answer"
-            required
-            onChange={this.changeHandler}
-            value={this.state.vacancy_no}
-          />
-        </div>
+      <>
+        <Header />
 
-        <div className="input-wrapper">
-          <span>Position Applied For( as it appears in the advert).</span>
-          <input
-            type="text"
-            name="position_applied"
-            placeholder="Your answer"
-            onChange={this.changeHandler}
-            value={this.state.position_applied}
-          />
-        </div>
+        <form className="main-wrapper">
+          <h3>4. Job application details</h3>
+          <div className="input-wrapper">
+            <span>Are you currently Employed?</span>
+            <select
+              name="employed"
+              onChange={this.changeHandler}
+              id=""
+              value={this.state.employed}
+            >
+              <option value="NA">select</option>
+              <option value="no">NO</option>
+              <option value="yes">YES</option>
+            </select>
+          </div>
+          <div className="input-wrapper">
+            <span>If Yes, Kindly Indicate Your Current Employer?</span>
+            <input
+              type="text"
+              name="current_employer"
+              placeholder="Your answer"
+              required
+              onChange={this.changeHandler}
+              value={this.state.current_employer}
+            />
+          </div>
+          <div className="input-wrapper">
+            <span>Experience (Number of years)</span>
+            <input
+              type="number"
+              name="experience"
+              placeholder="Your answer"
+              onChange={this.changeHandler}
+              min={0}
+              value={this.state.experience}
+              required
+            />
+          </div>
+          <div className="input-wrapper">
+            <label htmlFor="category">Job Category</label>
+            <select
+              name="categorySelected"
+              id="category"
+              value={this.state.categorySelected}
+              onChange={this.changeHandler}
+            >
+              <option value="NA">select</option>
+              {this.state.categories.map((q, i) => (
+                <option key={i} value={q}>
+                  {q}
+                </option>
+              ))}
+            </select>
+          </div>
+          {element}
+          <div className="input-wrapper">
+            <span>Vacancy no ( unique to each post)</span>
+            <input
+              type="text"
+              name="vacancy_no"
+              placeholder="Your answer"
+              required
+              onChange={this.changeHandler}
+              value={this.state.vacancy_no}
+            />
+          </div>
 
-        <div className="button-wrapper">
-          <button onClick={this.save}>Next</button>
-        </div>
-      </form>
+          <div className="input-wrapper">
+            <span>Position Applied For( as it appears in the advert).</span>
+            <input
+              type="text"
+              name="position_applied"
+              placeholder="Your answer"
+              onChange={this.changeHandler}
+              value={this.state.position_applied}
+            />
+          </div>
+
+          <div className="button-wrapper">
+            <button onClick={this.save}>Next</button>
+          </div>
+        </form>
+        <Footer />
+      </>
     );
   }
 }

@@ -3,13 +3,12 @@ import AcademicQualifications from "./components/AcademicQualifications";
 import { Router } from "@reach/router";
 import PersonalDetails from "./components/PersonalDetails";
 import JobApplication from "./components/JopApplication";
-import { Footer, Header } from "./components/HeaderAndFooter";
 import OtherPersonalDetails from "./components/OtherPersonalDetails";
 import Files from "./components/Files";
 import Done from "./components/Done";
-import Admin from "./components/Admin";
 import "./App.css";
 import Certifications from "./components/Certifications";
+import Admin from "./components/Admin";
 
 export class App extends Component {
   constructor(props) {
@@ -29,7 +28,6 @@ export class App extends Component {
   render() {
     return (
       <>
-        <Header />
         {!this.state.done ? (
           <Router>
             <PersonalDetails path="/" setApplicantId={this.setApplicantId} />
@@ -59,7 +57,6 @@ export class App extends Component {
         ) : (
           <Done />
         )}
-        <Footer />
       </>
     );
   }
