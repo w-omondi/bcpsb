@@ -133,7 +133,7 @@ export class Admin extends Component {
           <table>
             <thead>
               {columns.map((column, index) => (
-                <th key={index}>{column.replace(/_/g, " ")}</th>
+                <th key={index}>{column.replace(/_/g, " ").toLocaleUpperCase()}</th>
               ))}
             </thead>
             <tbody>
@@ -143,7 +143,7 @@ export class Admin extends Component {
                     {new Date(colvalue.timestamp).toLocaleDateString()}{" "}
                     {new Date(colvalue.timestamp).toLocaleTimeString()}
                   </td>
-                  <td>{colvalue.salutation_title.toLowerCase()}</td>
+                  <td>{colvalue.salutation_title}</td>
                   <td>{colvalue.firstname}</td>
                   <td>{colvalue.middlename}</td>
                   <td>{colvalue.lastname}</td>

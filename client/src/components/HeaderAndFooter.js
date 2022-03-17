@@ -10,7 +10,7 @@ export function Header() {
         alt="avator"
       />
       <span>County Government of Baringo</span>
-      <span>BCPSB DATA CAPTURE FORM</span>
+      <span>BCPSB JOB APPLICATION FORM</span>
     </div>
   );
 }

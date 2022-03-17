@@ -124,8 +124,14 @@ const insertIntoAcademicQualifications = (req, res) => {
 const saveCertifications = (req, res) => {
   console.log(req.body.data);
   console.log("saving certifications");
-  const { applicantId, dateFrom, dateTo, institution, award, specialization } =
-    req.body.data;
+  const {
+    applicantId,
+    dateFrom,
+    dateTo,
+    institution,
+    award,
+    specialization,
+  } = req.body.data;
   let query = `INSERT INTO certifications (applicantId,dateFrom, dateTo, institution, award, specialization) VALUES (?,?, ?, ?, ?,?);`;
   db.query(
     query,
@@ -144,24 +150,28 @@ const updateJobDetails = (req, res) => {
   const {
     employed,
     current_employer,
+    professional_membership,
     membership_no,
     vacancy_no,
     position_applied,
     tsc_egistration_number,
     school_applied,
+    healthcare_applied,
     applicantId,
   } = req.body.data;
-  let query = `UPDATE applicants SET employed=?,current_employer=?,membership_no=?,vacancy_no=?, position_applied=?,tsc_egistration_number=?, school_applied=? WHERE applicant_id=?;`;
+  let query = `UPDATE applicants SET employed=?,current_employer=?,professional_membership=?,membership_no=?,vacancy_no=?, position_applied=?,tsc_egistration_number=?, school_applied=?, healthcare_applied=? WHERE applicant_id=?;`;
   db.query(
     query,
     [
       employed,
       current_employer,
+      professional_membership,
       membership_no,
       vacancy_no,
       position_applied,
       tsc_egistration_number,
       school_applied,
+      healthcare_applied,
       applicantId,
     ],
     (err, result) => {

@@ -24,14 +24,14 @@ export class PersonalDetails extends Component {
       postal_address: "",
       postal_code: "",
     };
+    this.registerApplicant = this.registerApplicant.bind(this);
   }
 
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value.toUpperCase() });
   };
 
-  registerApplicant = (e) => {
-    console.log(this.state);
+  registerApplicant() {
     const {
       email,
       firstname,
@@ -53,7 +53,7 @@ export class PersonalDetails extends Component {
       !location
     ) {
       alert(
-        "The following field are mandatory       email,firstname,lastname,salutation_title,national_id,date_of_birth,phone,location"
+        "The following field are mandatory  email,firstname,lastname,salutation_title,national_id,date_of_birth,phone,location"
       );
     } else {
       axios.post(`/personal-data`, { data: this.state }).then((res) => {
@@ -65,13 +65,12 @@ export class PersonalDetails extends Component {
         });
       });
     }
-  };
+  }
 
   render() {
     return (
       <>
         <Header />
-
         <div className="main-wrapper">
           <h3>1. Personal Details of the Applicant </h3>
           <div className="input-wrapper">
@@ -137,6 +136,7 @@ export class PersonalDetails extends Component {
               placeholder="Your answer"
               onChange={this.changeHandler}
               value={this.state.national_id}
+              required
             />
           </div>
           <div className="input-wrapper">
@@ -147,6 +147,7 @@ export class PersonalDetails extends Component {
               placeholder="Your answer"
               value={this.state.phone}
               onChange={this.changeHandler}
+              required
             />
           </div>
           <div className="input-wrapper">
@@ -157,6 +158,7 @@ export class PersonalDetails extends Component {
               placeholder="Your answer"
               value={this.state.date_of_birth}
               onChange={this.changeHandler}
+              required
             />
           </div>
           <div className="input-wrapper">
@@ -167,6 +169,7 @@ export class PersonalDetails extends Component {
               placeholder="Your answer"
               value={this.state.home_county}
               onChange={this.changeHandler}
+              required
             />
           </div>
           <div className="input-wrapper">
@@ -177,6 +180,7 @@ export class PersonalDetails extends Component {
               placeholder="Your answer"
               onChange={this.changeHandler}
               value={this.state.sub_county}
+              required
             />
           </div>
           <div className="input-wrapper">
@@ -187,6 +191,7 @@ export class PersonalDetails extends Component {
               placeholder="Your answer"
               onChange={this.changeHandler}
               value={this.state.ward}
+              required
             />
           </div>
           <div className="input-wrapper">
@@ -197,6 +202,7 @@ export class PersonalDetails extends Component {
               placeholder="Your answer"
               value={this.state.location}
               onChange={this.changeHandler}
+              required
             />
           </div>
           <div className="input-wrapper">
@@ -207,6 +213,7 @@ export class PersonalDetails extends Component {
               placeholder="Your answer"
               value={this.state.sub_location}
               onChange={this.changeHandler}
+              required
             />
           </div>
           <div className="input-wrapper">
@@ -217,6 +224,7 @@ export class PersonalDetails extends Component {
               placeholder="Your answer"
               value={this.state.postal_address}
               onChange={this.changeHandler}
+              required
             />
           </div>
           <div className="input-wrapper">
@@ -227,6 +235,7 @@ export class PersonalDetails extends Component {
               placeholder="Your answer"
               value={this.state.postal_code}
               onChange={this.changeHandler}
+              required
             />
           </div>
           <div className="button-wrapper">

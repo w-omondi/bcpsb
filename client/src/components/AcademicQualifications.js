@@ -9,14 +9,15 @@ export class AcademicQualifications extends Component {
 
     this.state = {
       qualifications: [
-        "Doctorate",
-        "Masters",
-        "Bachelors",
-        "Higher Diploma",
-        "Diploma",
-        "Certificate",
-        "KCSE certificate",
-        "KCPE Certificate",
+        "SELECT",
+        "DOCTORATE",
+        "MASTERS",
+        "BACHELORS",
+        "HIGHER DIPLOMA",
+        "DIPLOMA",
+        "CERTIFICATE",
+        "KCSE CERTIFICATE",
+        "KCPE CERTIFICATE",
       ],
       dateFrom: "",
       dateTo: "",
@@ -25,10 +26,11 @@ export class AcademicQualifications extends Component {
       savedQualifications: [],
       applicantId: this.props.applicantId,
       specialization: "",
+      next: false,
     };
   }
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value.toUpperCase() });
   };
 
   componentDidMount() {
@@ -36,19 +38,25 @@ export class AcademicQualifications extends Component {
   }
 
   addQulification = () => {
-    console.log(this.state);
-    axios.post(`/academic-qualifications`, { data: this.state }).then((res) => {
-      //fetch data saved
-      //clear state variables
-      console.log(res.data);
-      this.setState({
-        dateFrom: "",
-        dateTo: "",
-        institution: "",
-        attainment: "",
-      });
-      this.loadSavedQualifications();
-    });
+    const { dateFrom, dateTo, institution, attainment, specialization } =
+      this.state;
+    !dateFrom || !dateTo || !institution || !attainment || !specialization
+      ? alert("All fields are mandatory")
+      : axios
+          .post(`/academic-qualifications`, { data: this.state })
+          .then((res) => {
+            //fetch data saved
+            //clear state variables
+            console.log(res.data);
+            this.setState({
+              dateFrom: "",
+              dateTo: "",
+              institution: "",
+              attainment: "",
+              next: true,
+            });
+            this.loadSavedQualifications();
+          });
   };
 
   loadSavedQualifications = () => {
@@ -118,7 +126,9 @@ export class AcademicQualifications extends Component {
             <select
               name="attainment"
               id="attainment"
-              onChange={this.changeHandler}
+              onChange={(e) =>
+                this.setState({ [e.target.name]: e.target.value })
+              }
               value={this.state.attainment}
             >
               {this.state.qualifications.map((q, i) => (
@@ -142,15 +152,17 @@ export class AcademicQualifications extends Component {
           </div>
           <div className="button-wrapper">
             <button onClick={this.addQulification}>Add</button>
-            <button
-              onClick={() =>
-                navigate("/certifications", {
-                  state: { applicantId: this.state.applicantId },
-                })
-              }
-            >
-              Next
-            </button>
+            {!this.state.next ? null : (
+              <button
+                onClick={() =>
+                  navigate("/certifications", {
+                    state: { applicantId: this.state.applicantId },
+                  })
+                }
+              >
+                Next
+              </button>
+            )}
           </div>
           <div className="input-wrapper" style={{ width: "100%" }}>
             <table>

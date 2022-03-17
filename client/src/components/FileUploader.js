@@ -49,6 +49,7 @@ export class FileUploader extends Component {
           id="upload"
           accept="application/pdf"
           onChange={this.onChangeHandler}
+          required
         />
         {this.state.files.length !== 0 ? (
           <button onClick={this.onSave}>upload</button>

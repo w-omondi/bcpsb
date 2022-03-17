@@ -19,22 +19,41 @@ export class OtherPersonalDetails extends Component {
     };
   }
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value.toUpperCase() });
   };
   setValue = (chapter6_compliance) => {
     this.setState({ chapter6_compliance: chapter6_compliance });
   };
 
   save = () => {
-    console.log(this.state);
-    axios.post(`/other-personal-data`, { data: this.state }).then((res) => {
-      console.log(res.data);
-      navigate("/academic-qualifications", {
-        state: { applicantId: this.state.applicantId },
-      }).catch((err) => {
-        console.log(err.message);
+    const {
+      applicantId,
+      ethnicity,
+      minority_group,
+      plwd,
+      disability_nature_APDK,
+      referees,
+    } = this.state;
+
+    if (
+      !applicantId ||
+      !ethnicity ||
+      !minority_group ||
+      !plwd ||
+      !disability_nature_APDK ||
+      !referees
+    ) {
+      alert("All fields are mandatory");
+    } else {
+      axios.post(`/other-personal-data`, { data: this.state }).then((res) => {
+        console.log(res.data);
+        navigate("/academic-qualifications", {
+          state: { applicantId: this.state.applicantId },
+        }).catch((err) => {
+          console.log(err.message);
+        });
       });
-    });
+    }
   };
 
   render() {
@@ -60,11 +79,11 @@ export class OtherPersonalDetails extends Component {
               name="minority_group"
               id=""
               value={this.state.minority_group}
-              onChange={this.changeHandler}
+              onChange={(e)=>this.setState({[e.target.name]:e.target.value})}
             >
               <option value="NA">select</option>
-              <option value="yes">YES</option>
-              <option value="no">NO</option>
+              <option value="YES">YES</option>
+              <option value="NO">NO</option>
             </select>
           </div>
           <div className="input-wrapper">
@@ -73,11 +92,11 @@ export class OtherPersonalDetails extends Component {
               name="plwd"
               id=""
               value={this.state.plwd}
-              onChange={this.changeHandler}
+              onChange={(e)=>this.setState({[e.target.name]:e.target.value})}
             >
               <option value="NA">select</option>
-              <option value="yes">YES</option>
-              <option value="no">NO</option>
+              <option value="YES">YES</option>
+              <option value="NO">NO</option>
             </select>
           </div>
           <div className="input-wrapper">

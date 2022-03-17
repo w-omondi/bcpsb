@@ -8,7 +8,7 @@ export default class JopApplication extends Component {
     super(props);
 
     this.state = {
-      categories: ["none", "Health workers", "Teachers", "Other"],
+      categories: ["NA", "HEALTH WORKERS", "TEACHER", "OTHER"],
       categorySelected: "",
       employed: "",
       experience: "",
@@ -18,32 +18,52 @@ export default class JopApplication extends Component {
       position_applied: "",
       tsc_egistration_number: "",
       school_applied: "",
-      professional_membership: "  ",
+      professional_membership: "",
+      healthcare_applied: "",
       applicantId: this.props.applicantId,
     };
   }
 
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value.toUpperCase() });
   };
 
   save = (e) => {
     e.preventDefault();
-    console.log(this.state);
-    axios.post(`/job-details`, { data: this.state }).then((res) => {
-      console.log(res.data);
-      navigate("/file-upload", {
-        state: { applicantId: this.state.applicantId },
-      }).catch((err) => {
-        console.log(err.message);
+    const {
+      categorySelected,
+      employed,
+      current_employer,
+      vacancy_no,
+      position_applied,
+      applicantId,
+    } = this.state;
+
+    if (
+      !categorySelected ||
+      !employed ||
+      !current_employer ||
+      !vacancy_no ||
+      !position_applied ||
+      !applicantId
+    ) {
+      alert("All fields are mandatory");
+    } else {
+      axios.post(`/job-details`, { data: this.state }).then((res) => {
+        console.log(res.data);
+        navigate("/file-upload", {
+          state: { applicantId: this.state.applicantId },
+        }).catch((err) => {
+          console.log(err.message);
+        });
       });
-    });
+    }
   };
 
   render() {
     let element = "";
     switch (this.state.categorySelected) {
-      case "Teachers":
+      case "TEACHER":
         element = (
           <div>
             <div className="input-wrapper">
@@ -54,6 +74,7 @@ export default class JopApplication extends Component {
                 placeholder="Your answer"
                 onChange={this.changeHandler}
                 value={this.state.tsc_egistration_number}
+                required
               />
             </div>
             <div className="input-wrapper">
@@ -64,12 +85,13 @@ export default class JopApplication extends Component {
                 placeholder="Your answer"
                 onChange={this.changeHandler}
                 value={this.state.school_applied}
+                required
               />
             </div>
           </div>
         );
         break;
-      case "Health workers":
+      case "HEALTH WORKERS":
         element = (
           <div style={{ width: "100%" }}>
             <div className="input-wrapper">
@@ -81,6 +103,7 @@ export default class JopApplication extends Component {
                 placeholder="Your answer"
                 onChange={this.changeHandler}
                 value={this.state.professional_membership}
+                required
               />
             </div>
             <div className="input-wrapper">
@@ -91,6 +114,7 @@ export default class JopApplication extends Component {
                 placeholder="Your answer"
                 onChange={this.changeHandler}
                 value={this.state.membership_no}
+                required
               />
             </div>
             <div className="input-wrapper">
@@ -98,6 +122,17 @@ export default class JopApplication extends Component {
                 (b): Possession of a valid letter or certificate of confirmation
                 of membership in good standing (if any to be uploaded)
               </span>
+            </div>
+            <div className="input-wrapper">
+              <span>Health Centre applying for </span>
+              <input
+                type="text"
+                name="healthcare_applied"
+                placeholder="Your answer"
+                onChange={this.changeHandler}
+                value={this.state.healthcare_applied}
+                required
+              />
             </div>
           </div>
         );
@@ -109,20 +144,21 @@ export default class JopApplication extends Component {
     return (
       <>
         <Header />
-
         <form className="main-wrapper">
           <h3>4. Job application details</h3>
           <div className="input-wrapper">
             <span>Are you currently Employed?</span>
             <select
               name="employed"
-              onChange={this.changeHandler}
-              id=""
+              onChange={(e) =>
+                this.setState({ [e.target.name]: e.target.value.toUpperCase() })
+              }
               value={this.state.employed}
+              required
             >
               <option value="NA">select</option>
-              <option value="no">NO</option>
-              <option value="yes">YES</option>
+              <option value="NO">NO</option>
+              <option value="YES">YES</option>
             </select>
           </div>
           <div className="input-wrapper">
@@ -154,7 +190,10 @@ export default class JopApplication extends Component {
               name="categorySelected"
               id="category"
               value={this.state.categorySelected}
-              onChange={this.changeHandler}
+              onChange={(e) =>
+                this.setState({ [e.target.name]: e.target.value })
+              }
+              required
             >
               <option value="NA">select</option>
               {this.state.categories.map((q, i) => (
@@ -185,6 +224,7 @@ export default class JopApplication extends Component {
               placeholder="Your answer"
               onChange={this.changeHandler}
               value={this.state.position_applied}
+              required
             />
           </div>
 

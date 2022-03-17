@@ -218,14 +218,14 @@ thead {
 td,
 th {
     padding: 2px;
-    text-align: center;
+    text-align: left;
     border: 1px solid grey;
-    text-transform: capitalize;
+    text-transform:uppercase;
 }
 
 td {
     font-size: smaller;
-    text-transform: lowercase;
+    text-transform:uppercase;
 }
 
 th {
