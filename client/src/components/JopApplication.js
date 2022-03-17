@@ -78,7 +78,7 @@ export default class JopApplication extends Component {
               />
             </div>
             <div className="input-wrapper">
-              <span>School your are applying for</span>
+              <span>School your are applying</span>
               <input
                 type="text"
                 name="school_applied"
@@ -124,7 +124,7 @@ export default class JopApplication extends Component {
               </span>
             </div>
             <div className="input-wrapper">
-              <span>Health Centre applying for </span>
+              <span>Health facility</span>
               <input
                 type="text"
                 name="healthcare_applied"
