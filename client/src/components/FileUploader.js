@@ -7,7 +7,7 @@ export class FileUploader extends Component {
 
     this.state = {
       files: "",
-      applicantId: this.props.applicantId || 29,
+      applicantId: this.props.applicantId,
       success: false,
       loading: false,
     };

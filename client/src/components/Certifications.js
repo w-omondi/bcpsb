@@ -13,7 +13,7 @@ export class Certifications extends Component {
       award: "",
       specialization: "",
       savedCertifications: [],
-      applicantId: this.props.applicantId || 28,
+      applicantId: this.props.applicantId,
       active: true,
     };
   }

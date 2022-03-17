@@ -22,7 +22,7 @@ export class AcademicQualifications extends Component {
       institution: "",
       attainment: "",
       savedQualifications: [],
-      applicantId: this.props.applicantId || 29,
+      applicantId: this.props.applicantId,
       specialization: "",
     };
   }
