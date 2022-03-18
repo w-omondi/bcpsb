@@ -12,6 +12,7 @@ const {
   insertIntoAcademicQualifications,
   updateJobDetails,
   saveCertifications,
+  getFullApplications,
 } = require("./application");
 const { upload, zipDownload, filesToZip } = require("./fileController");
 const app = express();
@@ -76,7 +77,8 @@ app.post("/upload", upload, (req, res) => {
 app.get(`/download-zip/:zipPath`, zipDownload);
 
 //fetching applications
-app.get("/applications", getAllApplications);
+app.get("/applications/:limit", getAllApplications);
+app.get("/full", getFullApplications);
 app.get("/filter-applications/:date/:limit", getCustomApplications);
 
 //Captures unmatched routes

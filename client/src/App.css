@@ -194,12 +194,12 @@ button:active {
 .tabcontrol {
     width: 50%;
     padding: 5px;
-    text-align: center;
+    text-align: left;
     align-items: center;
 }
 
 .tabcontrol input {
-    width: 90%;
+    width: 50%;
     padding: 5px;
     height: 25px;
     margin: 5px;

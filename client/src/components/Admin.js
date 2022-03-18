@@ -19,16 +19,16 @@ export class Admin extends Component {
   }
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value }, () => {
-      this.getApplications(this.state.filterDate, this.state.limit);
+      this.getApplications();
     });
   };
-  getApplications = (date, limit) => {
-    if (!limit || !date) {
+  getApplications = () => {
+    if (this.state.limit === "" || !this.state.limit) {
       this.Applications();
     } else {
       this.setState({ loading: true });
       axios
-        .get(`/filter-applications/${date}/${limit}`)
+        .get(`/applications/${this.state.limit}`)
         .then((response) => {
           console.log(response.data);
           this.setState({ applications: response.data, loading: false });
@@ -42,7 +42,7 @@ export class Admin extends Component {
   Applications = () => {
     this.setState({ loading: true });
     axios
-      .get(`/applications`)
+      .get(`/full`)
       .then((response) => {
         console.log(response.data);
         this.setState({ applications: response.data, loading: false });
@@ -50,9 +50,6 @@ export class Admin extends Component {
       .catch((err) => {
         console.log(err.message);
       });
-  };
-  clearFilter = () => {
-    this.setState({ filterDate: "", limit: 100 }, () => this.Applications());
   };
 
   render() {
@@ -107,22 +104,12 @@ export class Admin extends Component {
                 placeholder="limit"
               />
             </div>
-            <div className="tabcontrol">
-              <label htmlFor="date">From</label>
-              <input
-                id="date"
-                type="date"
-                onChange={this.changeHandler}
-                name="filterDate"
-                value={this.state.filterDate}
-              />
-            </div>
             <span
-              onClick={this.clearFilter}
+              onClick={this.Applications}
               style={{ textDecoration: "underline" }}
               className="check-applications"
             >
-              Check applications
+              Full list
             </span>
           </div>
           <div className="control-wrapper" style={{ width: "60%" }}>

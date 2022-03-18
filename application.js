@@ -63,6 +63,13 @@ timestamp) VALUES('${email}','${firstname}',\
 };
 
 const getAllApplications = (req, res) => {
+  let query = `SELECT * FROM applicants WHERE applicants.position_applied IS NOT NULL AND applicants.vacancy_no IS NOT NULL order by timestamp desc LIMIT ${req.params.limit};`;
+  db.query(query, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+const getFullApplications = (req, res) => {
   let query = `SELECT * FROM applicants WHERE applicants.position_applied IS NOT NULL AND applicants.vacancy_no IS NOT NULL order by timestamp desc;`;
   db.query(query, (err, result) => {
     if (err) throw err;
@@ -188,4 +195,5 @@ module.exports = {
   insertIntoAcademicQualifications,
   updateJobDetails,
   saveCertifications,
+  getFullApplications,
 };
