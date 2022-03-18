@@ -64,6 +64,7 @@ app.post("/upload", upload, (req, res) => {
   if (!req.body.applicantId) {
     res.status(200).end();
   } else {
+    console.log(req.body.applicantId);
     let q = `UPDATE applicants SET upload ='${req.file.filename}' WHERE applicant_id=${req.body.applicantId};`;
     db.query(q, (err, result) => {
       if (err) throw err;

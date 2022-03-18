@@ -82,21 +82,25 @@ const getCustomApplications = (req, res) => {
 
 const updateOtherPersonalDetails = (req, res) => {
   console.log("Other personal");
-  const {
-    applicantId,
-    ethnicity,
-    minority_group,
-    plwd,
-    disability_nature_APDK,
-    referees,
-    chapter6_compliance,
-  } = req.body.data;
-  let query = `UPDATE applicants SET ethnicity='${ethnicity}',chapter6_compliance='${chapter6_compliance}',referees='${referees}', minority_group='${minority_group}', plwd='${plwd}', disability_nature_APDK='${disability_nature_APDK}' WHERE applicant_id=${applicantId};`;
-  db.query(query, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.json(result);
-  });
+  if (!req.body.data.applicantId) {
+    res.end();
+  } else {
+    const {
+      applicantId,
+      ethnicity,
+      minority_group,
+      plwd,
+      disability_nature_APDK,
+      referees,
+      chapter6_compliance,
+    } = req.body.data;
+    let query = `UPDATE applicants SET ethnicity='${ethnicity}',chapter6_compliance='${chapter6_compliance}',referees='${referees}', minority_group='${minority_group}', plwd='${plwd}', disability_nature_APDK='${disability_nature_APDK}' WHERE applicant_id=${applicantId};`;
+    db.query(query, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      res.json(result);
+    });
+  }
 };
 
 const insertIntoAcademicQualifications = (req, res) => {
@@ -124,14 +128,8 @@ const insertIntoAcademicQualifications = (req, res) => {
 const saveCertifications = (req, res) => {
   console.log(req.body.data);
   console.log("saving certifications");
-  const {
-    applicantId,
-    dateFrom,
-    dateTo,
-    institution,
-    award,
-    specialization,
-  } = req.body.data;
+  const { applicantId, dateFrom, dateTo, institution, award, specialization } =
+    req.body.data;
   let query = `INSERT INTO certifications (applicantId,dateFrom, dateTo, institution, award, specialization) VALUES (?,?, ?, ?, ?,?);`;
   db.query(
     query,
