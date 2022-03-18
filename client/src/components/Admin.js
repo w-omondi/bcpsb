@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { CSVLink } from "react-csv";
 import axios from "axios";
 import AdminHeader from "./AdminHeader";
+import Loading from "./Loading";
 export class Admin extends Component {
   constructor(props) {
     super(props);
@@ -9,7 +10,8 @@ export class Admin extends Component {
     this.state = {
       applications: [],
       filterDate: "",
-      limit: 5,
+      limit: 100,
+      loading: false,
     };
   }
   componentDidMount() {
@@ -21,32 +23,36 @@ export class Admin extends Component {
     });
   };
   getApplications = (date, limit) => {
-    !limit || !date
-      ? this.Applications()
-      : axios
-          .get(`/filter-applications/${date}/${limit}`)
-          .then((response) => {
-            console.log(response.data);
-            this.setState({ applications: response.data });
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
+    if (!limit || !date) {
+      this.Applications();
+    } else {
+      this.setState({ loading: true });
+      axios
+        .get(`/filter-applications/${date}/${limit}`)
+        .then((response) => {
+          console.log(response.data);
+          this.setState({ applications: response.data, loading: false });
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   };
 
   Applications = () => {
+    this.setState({ loading: true });
     axios
       .get(`/applications`)
       .then((response) => {
         console.log(response.data);
-        this.setState({ applications: response.data });
+        this.setState({ applications: response.data, loading: false });
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
   clearFilter = () => {
-    this.setState({ filterDate: "", limit: 5 }, () => this.Applications());
+    this.setState({ filterDate: "", limit: 100 }, () => this.Applications());
   };
 
   render() {
@@ -85,7 +91,7 @@ export class Admin extends Component {
       // "referees"
     ];
     return (
-      <div className="admin">
+      <div className="admin" style={{ height: "100vh" }}>
         <AdminHeader />
         <div className="admin-tab">
           <div className="control-wrapper" style={{ width: "40%" }}>
@@ -129,32 +135,37 @@ export class Admin extends Component {
             </CSVLink>
           </div>
         </div>
-        <div className="table-wrapper">
-          <table>
-            <thead>
-              {columns.map((column, index) => (
-                <th key={index}>{column.replace(/_/g, " ").toLocaleUpperCase()}</th>
-              ))}
-            </thead>
-            <tbody>
-              {this.state.applications.map((colvalue, index) => (
-                <tr key={index}>
-                  <td>
-                    {new Date(colvalue.timestamp).toLocaleDateString()}{" "}
-                    {new Date(colvalue.timestamp).toLocaleTimeString()}
-                  </td>
-                  <td>{colvalue.salutation_title}</td>
-                  <td>{colvalue.firstname}</td>
-                  <td>{colvalue.middlename}</td>
-                  <td>{colvalue.lastname}</td>
-                  <td>{colvalue.email}</td>
-                  <td>{colvalue.position_applied}</td>
-                  <td>{colvalue.vacancy_no}</td>
-                  <td>{colvalue.national_id}</td>
-                  <td>{colvalue.phone}</td>
-                  {/* <td>{colvalue.date_of_birth.split("T")[0]}</td> */}
-                  <td>
-                    {/* <button
+        {this.state.loading ? (
+          <Loading />
+        ) : (
+          <div className="table-wrapper">
+            <table>
+              <thead>
+                {columns.map((column, index) => (
+                  <th key={index}>
+                    {column.replace(/_/g, " ").toLocaleUpperCase()}
+                  </th>
+                ))}
+              </thead>
+              <tbody>
+                {this.state.applications.map((colvalue, index) => (
+                  <tr key={index}>
+                    <td>
+                      {new Date(colvalue.timestamp).toLocaleDateString()}{" "}
+                      {new Date(colvalue.timestamp).toLocaleTimeString()}
+                    </td>
+                    <td>{colvalue.salutation_title}</td>
+                    <td>{colvalue.firstname}</td>
+                    <td>{colvalue.middlename}</td>
+                    <td>{colvalue.lastname}</td>
+                    <td>{colvalue.email}</td>
+                    <td>{colvalue.position_applied}</td>
+                    <td>{colvalue.vacancy_no}</td>
+                    <td>{colvalue.national_id}</td>
+                    <td>{colvalue.phone}</td>
+                    {/* <td>{colvalue.date_of_birth.split("T")[0]}</td> */}
+                    <td>
+                      {/* <button
                       onClick={() =>
                         this.downloadZip(colvalue.academic_certificates)
                       }
@@ -168,12 +179,12 @@ export class Admin extends Component {
                     >
                       download
                     </button> */}
-                    <a href={`/download-zip/${colvalue.upload}`} download>
-                      Download
-                    </a>
-                  </td>
-                  {/* <td>{colvalue.academic_professional_credentials}</td> */}
-                  {/* <td>{colvalue.home_county}</td>
+                      <a href={`/download-zip/${colvalue.upload}`} download>
+                        Download
+                      </a>
+                    </td>
+                    {/* <td>{colvalue.academic_professional_credentials}</td> */}
+                    {/* <td>{colvalue.home_county}</td>
                 <td>{colvalue.sub_county}</td>
                 <td>{colvalue.ward}</td>
                 <td>{colvalue.location}</td>
@@ -192,11 +203,12 @@ export class Admin extends Component {
                 <td>{colvalue.plwd}</td>
                 <td>{colvalue.chapter6_compliance}</td>
                 <td>{colvalue.referees}</td> */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     );
   }

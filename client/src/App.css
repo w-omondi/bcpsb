@@ -52,9 +52,8 @@ h3 {
 }
 
 .Logo {
-    max-width: 150px;
-    max-height: 150px;
-    padding: 10px;
+    max-width: 100px;
+    max-height: 100px;
     margin: 0px auto;
 }
 
@@ -160,7 +159,7 @@ button:active {
 }
 
 .admin {
-    width: 80%;
+    width: 100%;
     margin: 0px auto;
     overflow-x: hidden;
 }
@@ -168,6 +167,7 @@ button:active {
 .table-wrapper {
     width: 100%;
     overflow-x: scroll;
+    height: 60vh;
 }
 
 .admin-header {
@@ -218,14 +218,15 @@ thead {
 td,
 th {
     padding: 2px;
-    text-align: left;
+    text-align:center;
     border: 1px solid grey;
-    text-transform:uppercase;
+    text-transform: uppercase;
+    width: 9.09%
 }
 
 td {
     font-size: smaller;
-    text-transform:uppercase;
+    text-transform: uppercase;
 }
 
 th {

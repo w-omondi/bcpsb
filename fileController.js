@@ -39,9 +39,7 @@ const zipDownload = (req, res) => {
     res.end();
   } else {
     console.log(zipPath);
-    res.download(zipPath, (err) => {
-      if (err) throw err;
-    });
+    res.download(zipPath);
   }
 };
 
