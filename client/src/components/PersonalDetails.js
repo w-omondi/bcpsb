@@ -28,7 +28,9 @@ export class PersonalDetails extends Component {
   }
 
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value.toUpperCase() });
+    this.setState({
+      [e.target.name]: e.target.value.toUpperCase().replace(/'/g, ""),
+    });
   };
 
   registerApplicant() {

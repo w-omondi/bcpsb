@@ -19,7 +19,9 @@ export class OtherPersonalDetails extends Component {
     };
   }
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value.toUpperCase() });
+    this.setState({
+      [e.target.name]: e.target.value.toUpperCase().replace(/'/g, ""),
+    });
   };
   setValue = (chapter6_compliance) => {
     this.setState({ chapter6_compliance: chapter6_compliance });
@@ -79,7 +81,9 @@ export class OtherPersonalDetails extends Component {
               name="minority_group"
               id=""
               value={this.state.minority_group}
-              onChange={(e)=>this.setState({[e.target.name]:e.target.value})}
+              onChange={(e) =>
+                this.setState({ [e.target.name]: e.target.value })
+              }
             >
               <option value="NA">select</option>
               <option value="YES">YES</option>
@@ -92,7 +96,9 @@ export class OtherPersonalDetails extends Component {
               name="plwd"
               id=""
               value={this.state.plwd}
-              onChange={(e)=>this.setState({[e.target.name]:e.target.value})}
+              onChange={(e) =>
+                this.setState({ [e.target.name]: e.target.value })
+              }
             >
               <option value="NA">select</option>
               <option value="YES">YES</option>

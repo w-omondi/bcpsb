@@ -25,7 +25,9 @@ export default class JopApplication extends Component {
   }
 
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value.toUpperCase() });
+    this.setState({
+      [e.target.name]: e.target.value.toUpperCase().replace(/'/g, ""),
+    });
   };
 
   save = (e) => {
