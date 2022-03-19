@@ -29,7 +29,6 @@ export class FileUploader extends Component {
         this.setState({ success: true, loading: false });
         this.props.setUploaded(true);
         sessionStorage.clear();
-        console.log(response);
       })
       .catch((err) => console.log(err.message));
   };

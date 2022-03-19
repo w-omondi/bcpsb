@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 
 export default function Done() {
-    return (
-            <div className="input-wrapper done">
-                <i className="fas fa-check-circle" />
-                <span>Your application submitted successfuly</span>
-            </div>
-    )
+  return (
+    <div className="input-wrapper done">
+      <i className="fas fa-check-circle" />
+      <span>Your application submitted successfuly</span>
+    </div>
+  );
 }

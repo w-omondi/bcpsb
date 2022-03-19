@@ -30,7 +30,6 @@ export class Admin extends Component {
       axios
         .get(`/applications/${this.state.limit}`)
         .then((response) => {
-          console.log(response.data);
           this.setState({ applications: response.data, loading: false });
         })
         .catch((err) => {
@@ -44,7 +43,6 @@ export class Admin extends Component {
     axios
       .get(`/full`)
       .then((response) => {
-        console.log(response.data);
         this.setState({ applications: response.data, loading: false });
       })
       .catch((err) => {
