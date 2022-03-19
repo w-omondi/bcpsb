@@ -63,15 +63,28 @@ timestamp) VALUES('${email}','${firstname}',\
 };
 
 const getAllApplications = (req, res) => {
-  let query = `SELECT * FROM applicants WHERE applicants.position_applied IS NOT NULL AND applicants.vacancy_no IS NOT NULL order by timestamp desc LIMIT ${req.params.limit};`;
+  let query = `SELECT x.*,GROUP_CONCAT(y.award,' ',y.institution,' ',y.specialization SEPARATOR '\n') AS certifications,\
+GROUP_CONCAT(z.attainment,' ',z.institution,' ',z.specialization SEPARATOR '\n') AS academic_qualifications \
+FROM applicants x \
+LEFT JOIN certifications y ON y.applicantId = x.applicant_id \
+LEFT JOIN academic_qualifications z ON z.applicantId = x.applicant_id \
+WHERE x.position_applied IS NOT NULL \
+GROUP BY x.applicant_id ORDER BY x.timestamp DESC LIMIT ${req.params.limit};`;
   db.query(query, (err, result) => {
     if (err) throw err;
     res.json(result);
   });
 };
 const getFullApplications = (req, res) => {
-  let query = `SELECT * FROM applicants WHERE applicants.position_applied IS NOT NULL AND applicants.vacancy_no IS NOT NULL order by timestamp desc;`;
-  db.query(query, (err, result) => {
+  let fineQuery = `SELECT x.*,GROUP_CONCAT(y.award,' ',y.institution,' ',y.specialization SEPARATOR '\n') AS certifications,\
+GROUP_CONCAT(z.attainment,' ',z.institution,' ',z.specialization SEPARATOR '\n') AS academic_qualifications \
+FROM applicants x \
+LEFT JOIN certifications y ON y.applicantId = x.applicant_id \
+LEFT JOIN academic_qualifications z ON z.applicantId = x.applicant_id \
+WHERE x.position_applied IS NOT NULL \
+GROUP BY x.applicant_id ORDER BY x.timestamp DESC;`;
+
+  db.query(fineQuery, (err, result) => {
     if (err) throw err;
     res.json(result);
   });

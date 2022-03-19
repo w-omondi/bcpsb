@@ -88,8 +88,6 @@ export class AcademicQualifications extends Component {
                 flexDirection: "row",
               }}
             >
-              <span>APPLICATION S/NO: {this.state.applicantId}</span>
-
               <label htmlFor="date-from">From: </label>
               <input
                 type="number"

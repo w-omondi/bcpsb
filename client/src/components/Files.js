@@ -11,7 +11,6 @@ export default function Files(props) {
       <div className="main-wrapper">
         <h3>5. File Upload</h3>
         <div className="input-wrapper">
-          <span>{sessionStorage.getItem("applicantId")}</span>
           <span>
             IMPORTANT: Attach all your Academic certificates here(Combine all
             certificates in one PDF document)

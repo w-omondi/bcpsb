@@ -66,10 +66,6 @@ export class Certifications extends Component {
         <div className="main-wrapper">
           <h3>3. Professional Certifications.</h3>
           <div className="input-wrapper">
-            <span>APPLICATION S/NO: {this.state.applicantId}</span>
-          </div>
-          <div className="input-wrapper">
-            <span>APPLICATION S/NO: {this.state.applicantId}</span> <br />
             <div
               style={{
                 width: "100%",
