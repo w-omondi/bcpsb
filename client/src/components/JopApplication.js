@@ -20,7 +20,8 @@ export default class JopApplication extends Component {
       school_applied: "",
       professional_membership: "",
       healthcare_applied: "",
-      applicantId: this.props.applicantId,
+      applicantId:
+        this.props.applicantId || sessionStorage.getItem("applicantId"),
     };
   }
 
@@ -149,6 +150,7 @@ export default class JopApplication extends Component {
         <form className="main-wrapper">
           <h3>4. Job application details</h3>
           <div className="input-wrapper">
+            <span>APPLICATION S/NO: {this.state.applicantId}</span>
             <span>Are you currently Employed?</span>
             <select
               name="employed"

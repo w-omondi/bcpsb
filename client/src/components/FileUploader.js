@@ -7,7 +7,8 @@ export class FileUploader extends Component {
 
     this.state = {
       files: "",
-      applicantId: this.props.applicantId,
+      applicantId:
+        this.props.applicantId || sessionStorage.getItem("applicantId"),
       success: false,
       loading: false,
     };
@@ -27,6 +28,7 @@ export class FileUploader extends Component {
       .then((response) => {
         this.setState({ success: true, loading: false });
         this.props.setUploaded(true);
+        sessionStorage.clear();
         console.log(response);
       })
       .catch((err) => console.log(err.message));

@@ -14,12 +14,13 @@ export class Certifications extends Component {
       award: "",
       specialization: "",
       savedCertifications: [],
-      applicantId: this.props.applicantId,
+      applicantId:
+        this.props.applicantId || sessionStorage.getItem("applicantId"),
       active: false,
     };
   }
   changeHandler = (e) => {
-    this.setState({ [e.target.name]:  e.target.value.toUpperCase() });
+    this.setState({ [e.target.name]: e.target.value.toUpperCase() });
   };
   componentDidMount() {
     this.loadsavedCertifications();
@@ -65,6 +66,10 @@ export class Certifications extends Component {
         <div className="main-wrapper">
           <h3>3. Professional Certifications.</h3>
           <div className="input-wrapper">
+            <span>APPLICATION S/NO: {this.state.applicantId}</span>
+          </div>
+          <div className="input-wrapper">
+            <span>APPLICATION S/NO: {this.state.applicantId}</span> <br />
             <div
               style={{
                 width: "100%",

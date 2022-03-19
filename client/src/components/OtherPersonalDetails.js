@@ -9,7 +9,7 @@ export class OtherPersonalDetails extends Component {
     super(props);
 
     this.state = {
-      applicantId: this.props.applicantId,
+      applicantId: this.props.applicantId || sessionStorage.getItem("applicantId"),
       ethnicity: "",
       minority_group: "",
       plwd: "",
@@ -66,6 +66,7 @@ export class OtherPersonalDetails extends Component {
         <div className="main-wrapper">
           <h3>2. Other Personal Details ( applicable to all applicants) </h3>
           <div className="input-wrapper">
+            <span>APPLICATION S/NO: {this.state.applicantId}</span>
             <span>Ethnicity</span>
             <input
               type="text"

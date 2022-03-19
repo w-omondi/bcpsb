@@ -24,7 +24,8 @@ export class AcademicQualifications extends Component {
       institution: "",
       attainment: "",
       savedQualifications: [],
-      applicantId: this.props.applicantId,
+      applicantId:
+        this.props.applicantId || sessionStorage.getItem("applicantId"),
       specialization: "",
       next: false,
     };
@@ -87,6 +88,8 @@ export class AcademicQualifications extends Component {
                 flexDirection: "row",
               }}
             >
+              <span>APPLICATION S/NO: {this.state.applicantId}</span>
+
               <label htmlFor="date-from">From: </label>
               <input
                 type="number"
