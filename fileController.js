@@ -43,8 +43,8 @@ const zipDownload = (req, res) => {
   }
 };
 
-const downLoadAllFiles = (req,res) => {
-  let uploadDir = fs.readdirSync(path.join(__dirname + "/public/uploads/"));
+const downLoadAllFiles = (req, res) => {
+  let uploadDir = fs.readdirSync(__dirname + "/public/uploads/");
 
   const zip = new admzip();
 

@@ -13,7 +13,12 @@ const {
   getFullApplications,
   getLimitedApplications,
 } = require("./application");
-const { upload, zipDownload, filesToZip, downLoadAllFiles } = require("./fileController");
+const {
+  upload,
+  zipDownload,
+  filesToZip,
+  downLoadAllFiles,
+} = require("./fileController");
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -80,7 +85,7 @@ app.get("/applications/:limit", getLimitedApplications);
 app.get("/full", getFullApplications);
 
 //
-app.get("/download-all-files",downLoadAllFiles);
+app.get("/download-all-files", downLoadAllFiles);
 
 //Captures unmatched routes
 app.get("*", (req, res) => {
