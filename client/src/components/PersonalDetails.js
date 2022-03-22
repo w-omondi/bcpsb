@@ -60,7 +60,7 @@ export class PersonalDetails extends Component {
     } else {
       axios.post(`/personal-data`, { data: this.state }).then((res) => {
         this.props.setApplicantId(res.data.applicantId);
-        sessionStorage.setItem("applicantId", res.data.applicantId);
+        localStorage.setItem("applicantId", res.data.applicantId);
         navigate("/other-personal-details", {
           state: { applicantId: res.data.applicantId },
         }).catch((err) => {

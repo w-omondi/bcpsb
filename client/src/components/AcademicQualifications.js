@@ -25,7 +25,7 @@ export class AcademicQualifications extends Component {
       attainment: "",
       savedQualifications: [],
       applicantId:
-        this.props.applicantId || sessionStorage.getItem("applicantId"),
+        this.props.applicantId || localStorage.getItem("applicantId"),
       specialization: "",
       next: false,
     };

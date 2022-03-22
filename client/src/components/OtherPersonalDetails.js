@@ -9,7 +9,7 @@ export class OtherPersonalDetails extends Component {
     super(props);
 
     this.state = {
-      applicantId: this.props.applicantId || sessionStorage.getItem("applicantId"),
+      applicantId: this.props.applicantId || localStorage.getItem("applicantId"),
       ethnicity: "",
       minority_group: "",
       plwd: "",

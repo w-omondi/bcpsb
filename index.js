@@ -6,13 +6,12 @@ const { db } = require("./dbconnection");
 const cors = require("cors");
 const {
   applicationSubmitHandler,
-  getAllApplications,
-  getCustomApplications,
   updateOtherPersonalDetails,
   insertIntoAcademicQualifications,
   updateJobDetails,
   saveCertifications,
   getFullApplications,
+  getLimitedApplications,
 } = require("./application");
 const { upload, zipDownload, filesToZip } = require("./fileController");
 const app = express();
@@ -77,9 +76,8 @@ app.post("/upload", upload, (req, res) => {
 app.get(`/download-zip/:zipPath`, zipDownload);
 
 //fetching applications
-app.get("/applications/:limit", getAllApplications);
+app.get("/applications/:limit", getLimitedApplications);
 app.get("/full", getFullApplications);
-app.get("/filter-applications/:date/:limit", getCustomApplications);
 
 //Captures unmatched routes
 app.get("*", (req, res) => {

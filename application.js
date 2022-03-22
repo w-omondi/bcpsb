@@ -62,31 +62,20 @@ timestamp) VALUES('${email}','${firstname}',\
   });
 };
 
-const getAllApplications = (req, res) => {
-  let query = `SELECT x.*,GROUP_CONCAT(y.award,' ',y.institution,' ',y.specialization SEPARATOR '\n') AS certifications,\
-GROUP_CONCAT(z.attainment,' ',z.institution,' ',z.specialization SEPARATOR '\n') AS academic_qualifications \
-FROM applicants x \
-LEFT JOIN certifications y ON y.applicantId = x.applicant_id \
-LEFT JOIN academic_qualifications z ON z.applicantId = x.applicant_id \
-WHERE x.position_applied IS NOT NULL \
-GROUP BY x.applicant_id ORDER BY x.timestamp DESC LIMIT ${req.params.limit};`;
+const getLimitedApplications = (req, res) => {
+  let query = `CALL getLimitedApplications(${req.params.limit})`;
   db.query(query, (err, result) => {
     if (err) throw err;
-    res.json(result);
+    res.json(result[0]);
   });
 };
-const getFullApplications = (req, res) => {
-  let fineQuery = `SELECT x.*,GROUP_CONCAT(y.award,' ',y.institution,' ',y.specialization SEPARATOR '\n') AS certifications,\
-GROUP_CONCAT(z.attainment,' ',z.institution,' ',z.specialization SEPARATOR '\n') AS academic_qualifications \
-FROM applicants x \
-LEFT JOIN certifications y ON y.applicantId = x.applicant_id \
-LEFT JOIN academic_qualifications z ON z.applicantId = x.applicant_id \
-WHERE x.position_applied IS NOT NULL \
-GROUP BY x.applicant_id ORDER BY x.timestamp DESC;`;
 
+const getFullApplications = (req, res) => {
+  let fineQuery = "CALL getAllApplications();";
   db.query(fineQuery, (err, result) => {
     if (err) throw err;
-    res.json(result);
+    // console.log(result)
+    res.json(result[0]);
   });
 };
 
@@ -202,7 +191,7 @@ const updateJobDetails = (req, res) => {
 
 module.exports = {
   applicationSubmitHandler,
-  getAllApplications,
+  getLimitedApplications,
   getCustomApplications,
   updateOtherPersonalDetails,
   insertIntoAcademicQualifications,

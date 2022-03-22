@@ -15,7 +15,7 @@ export class Certifications extends Component {
       specialization: "",
       savedCertifications: [],
       applicantId:
-        this.props.applicantId || sessionStorage.getItem("applicantId"),
+        this.props.applicantId || localStorage.getItem("applicantId"),
       active: false,
     };
   }

@@ -1,3 +1,4 @@
+import { navigate } from "@reach/router";
 import axios from "axios";
 import React, { Component } from "react";
 
@@ -8,7 +9,7 @@ export class FileUploader extends Component {
     this.state = {
       files: "",
       applicantId:
-        this.props.applicantId || sessionStorage.getItem("applicantId"),
+        this.props.applicantId || localStorage.getItem("applicantId"),
       success: false,
       loading: false,
     };
@@ -28,7 +29,7 @@ export class FileUploader extends Component {
       .then((response) => {
         this.setState({ success: true, loading: false });
         this.props.setUploaded(true);
-        sessionStorage.clear();
+        navigate("/")
       })
       .catch((err) => console.log(err.message));
   };

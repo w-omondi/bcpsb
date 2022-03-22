@@ -21,7 +21,7 @@ export default class JopApplication extends Component {
       professional_membership: "",
       healthcare_applied: "",
       applicantId:
-        this.props.applicantId || sessionStorage.getItem("applicantId"),
+        this.props.applicantId || localStorage.getItem("applicantId"),
     };
   }
 
