@@ -9,9 +9,11 @@ export class Loading extends Component {
           alignItems: "center",
           fontSize: "x-large",
           textAlign: "center",
+          width:"50%",
+          marginTop:"20vh"
         }}
       >
-        <span>Fetching responses please wait ....</span>
+        <span>Fetching please wait ....</span>
         <br />
         <i className="fas fa-spinner fa-pulse" />
       </div>

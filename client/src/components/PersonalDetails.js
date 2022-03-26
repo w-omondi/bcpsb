@@ -75,6 +75,16 @@ export class PersonalDetails extends Component {
       <>
         <Header />
         <div className="main-wrapper">
+        <div className="input-wrapper">
+            <span>
+              <strong>IMPORTANT !!</strong>
+            </span>
+            <span>
+              Your application may be discarded automatically if you don't
+              complete the whole process until the final part which is uploading
+              your document
+            </span>
+          </div>
           <h3>1. Personal Details of the Applicant </h3>
           <div className="input-wrapper">
             <span>Email address</span>

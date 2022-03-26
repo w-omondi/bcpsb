@@ -9,6 +9,7 @@ import Done from "./components/Done";
 import "./App.css";
 import Certifications from "./components/Certifications";
 import Admin from "./components/Admin";
+import Manage from "./components/Manage";
 
 export class App extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ export class App extends Component {
               path="/file-upload"
             />
             <Admin path="/admin/dashboard" />
+            <Manage path="/admin/manage" />
           </Router>
         ) : (
           <Done />

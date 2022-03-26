@@ -108,7 +108,7 @@ export class OtherPersonalDetails extends Component {
           <div className="input-wrapper">
             <span>
               If yes, please state the nature of disability and APDK
-              Registration no
+              Registration No. Otherwise fill (NA)
             </span>
             <textarea
               name="disability_nature_APDK"

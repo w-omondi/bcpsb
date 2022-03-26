@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .App {
     width: 100%;
     display: flex;
@@ -100,22 +104,20 @@ select {
 }
 
 button {
-    padding: 10px;
     text-align: center;
-    background-color: #55ba42;
-    outline: none;
-    border: none;
     border-radius: 5px;
-    font-weight: bold;
-    color: white;
     width: 200px;
     text-transform: capitalize;
+    padding: 7px;
+    background-color: #55ba42;
+    outline: none;
+    border: #55ba42;
+    color: white;
 }
 
-button:hover,
 button:active {
-    background-color: #54ba42a2;
     cursor: pointer;
+    transform: scale(1.05);
 }
 
 .button-wrapper {
@@ -159,16 +161,12 @@ button:active {
 }
 
 .admin {
-    width: 100%;
+    width: 95%;
     margin: 0px auto;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
-.table-wrapper {
-    width: 100%;
-    overflow-x: scroll;
-    height: 60vh;
-}
 
 .admin-header {
     width: 100%;
@@ -205,6 +203,12 @@ button:active {
     margin: 5px;
 }
 
+.table-wrapper {
+    width: 100%;
+    overflow-x: scroll;
+    height: 70vh;
+}
+
 table {
     border: 1px solid grey;
     border-collapse: collapse;
@@ -215,22 +219,15 @@ thead {
     background-color: #80808025;
 }
 
-td,
-th {
-    padding: 2px;
-    text-align:center;
+table td, table th {
+    text-align: left;
     border: 1px solid grey;
     text-transform: uppercase;
-    width: 9.09%
+    padding:2px 5px;
+    font-size: x-small;
 }
 
-td {
-    font-size: smaller;
-    text-transform: uppercase;
-}
-
-th {
-    font-size: small;
+table th {
     padding-top: 10px;
     padding-bottom: 10px;
     text-transform: capitalize;
@@ -252,6 +249,16 @@ th {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
+    justify-content: space-between;
+}
+.manage{
+    width: 50%;
+    margin: 20px auto;
+}
+
+.manage .input-wrapper{
+    border-radius: unset;
 }
 
 @media screen and (max-width:800px) {
@@ -280,5 +287,8 @@ th {
 
     .main-wrapper {
         width: 90%;
+    }
+    .manage{
+        width:95%;
     }
 }

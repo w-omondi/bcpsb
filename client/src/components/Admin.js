@@ -18,11 +18,10 @@ export class Admin extends Component {
     this.Applications();
   }
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value }, () => {
-      this.getApplications();
-    });
+    this.setState({ [e.target.name]: e.target.value });
   };
-  getApplications = () => {
+
+  getLimitedApplications = () => {
     if (this.state.limit === "" || !this.state.limit) {
       this.Applications();
     } else {
@@ -53,7 +52,7 @@ export class Admin extends Component {
   render() {
     const columns = [
       "timestamp",
-      "salutation_title",
+      "title",
       "firstname",
       "middlename",
       "lastname",
@@ -89,8 +88,12 @@ export class Admin extends Component {
       <div className="admin" style={{ height: "100vh" }}>
         <AdminHeader />
         <div className="admin-tab">
-          <div className="control-wrapper" style={{ width: "40%" }}>
-            <div className="tabcontrol">
+          <div className="control-wrapper" style={{ width: "60%" }}>
+            <div className="tabcontrol"
+            style={{
+              display:"flex",
+              flexDirection:"row"
+            }}>
               <label htmlFor="limit">Limit</label>
               <input
                 id="limit"
@@ -101,6 +104,14 @@ export class Admin extends Component {
                 value={this.state.limit}
                 placeholder="limit"
               />
+              <button
+                style={{
+                  width: "unset",
+                }}
+                onClick={this.getLimitedApplications}
+              >
+                FETCH
+              </button>
             </div>
             <span
               onClick={this.Applications}
@@ -110,14 +121,17 @@ export class Admin extends Component {
               Full list
             </span>
           </div>
-          <div className="control-wrapper" style={{ width: "60%" }}>
+          <div className="control-wrapper" style={{ width: "40%" }}>
             <CSVLink
-              style={{ color: "white" }}
+              style={{ color: "white", margin: "5px" }}
               data={this.state.applications}
               filename={"BCPSB DATA CAPTURE FORM " + Date.now()}
             >
               Download full .csv file
             </CSVLink>
+            <a href="/logout" style={{ color: "white" }}>
+              LOGOUT <i className="fa fa-sign-out" />
+            </a>
           </div>
         </div>
         {this.state.loading ? (
@@ -126,11 +140,13 @@ export class Admin extends Component {
           <div className="table-wrapper">
             <table>
               <thead>
-                {columns.map((column, index) => (
-                  <th key={index}>
-                    {column.replace(/_/g, " ").toLocaleUpperCase()}
-                  </th>
-                ))}
+                <tr>
+                  {columns.map((column, index) => (
+                    <th key={index}>
+                      {column.replace(/_/g, " ").toLocaleUpperCase()}
+                    </th>
+                  ))}
+                </tr>
               </thead>
               <tbody>
                 {this.state.applications.map((colvalue, index) => (
@@ -192,6 +208,14 @@ export class Admin extends Component {
                 ))}
               </tbody>
             </table>
+            <div
+              style={{
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+            >
+              END
+            </div>
           </div>
         )}
       </div>

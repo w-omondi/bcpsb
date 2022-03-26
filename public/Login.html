@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"
+        integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .form-wrapper {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #55ba42;
+            margin: 20px auto;
+        }
+
+        .form-wrapper .header {
+            width: 100%;
+            padding: 20px;
+            background-color: #55ba42;
+            color: white;
+            text-align: center;
+            font-size: larger;
+        }
+
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            padding: 10px;
+        }
+
+        .login-form input {
+            width: 50%;
+            margin: 10px;
+            padding: 15px;
+        }
+
+        .login-form div {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            width: 50%;
+            margin: 2px auto;
+            font-size: small;
+            padding: 10px;
+        }
+
+        .login-form div span {
+            width: 50%;
+        }
+
+        .login-form div input {
+            width: 50%;
+        }
+
+        .login-form button {
+            width: 200px;
+            padding: 10px;
+            margin: 30px auto;
+        }
+
+        @media screen and (max-width:800px) {
+            .form-wrapper {
+                width: 95%;
+                margin-top: 10vh;
+            }
+
+            .login-form input,
+            .login-form button,
+            .login-form div {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Login extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    username: '',
+                    pword: '',
+                    checked: false,
+                    message:''
+                }
+            }
+            changeHandler = (e) => {
+                this.setState({ [e.target.name]: e.target.value, message: "" })
+            }
+            onSubmit = (e) => {
+                e.preventDefault();
+                axios.post('/login', this.state)
+                    .then(res => {
+                        (res.data.success ?
+                            window.location.href = res.data.next
+                            :
+                            this.setState({ message: "Invalid username or password" })
+                        )
+                    })
+                    .catch(err => alert(err.message))
+            }
+            render() {
+                return (
+                    <div className="form-wrapper">
+                        <div className="header">LOGIN</div>
+                        <form className="login-form">
+                            <input type="text" onChange={this.changeHandler} name="username" placeholder="username" value={this.state.username} required />
+                            <input type={this.state.checked ? "text" : "password"} onChange={this.changeHandler} name="pword" placeholder="password" value={this.state.pword} required />
+                            <div ><span>show password</span> <input type="checkbox" checked={this.state.checked} onClick={
+                                () => {
+                                    this.state.checked ?
+                                        this.setState({ checked: false })
+                                        :
+                                        this.setState({ checked: true })
+                                }
+                            } /></div>
+                            <span style={{ color: "red" }}>{this.state.message}</span>
+                            <button onClick={this.onSubmit}>login</button>
+                        </form>
+                    </div>)
+            }
+        }
+
+        ReactDOM.render(<Login />, document.getElementById("root"));
+
+    </script>
+</body>
+
+</html>
