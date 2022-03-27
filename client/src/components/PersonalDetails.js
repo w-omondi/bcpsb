@@ -54,19 +54,31 @@ export class PersonalDetails extends Component {
       !phone ||
       !location
     ) {
-      alert(
-        "The following field are mandatory  email,firstname,lastname,salutation_title,national_id,date_of_birth,phone,location"
-      );
+      alert("All fields are mandatory");
     } else {
-      axios.post(`/personal-data`, { data: this.state }).then((res) => {
-        this.props.setApplicantId(res.data.applicantId);
-        localStorage.setItem("applicantId", res.data.applicantId);
-        navigate("/other-personal-details", {
-          state: { applicantId: res.data.applicantId },
-        }).catch((err) => {
+      axios
+        .post(`/check-applicant`, { national_id, email })
+        .then((res) => {
+          if (res.data.exist) {
+            alert("You can only apply once");
+          } else {
+            axios
+              .post(`/personal-data`, { data: this.state })
+              .then((res) => {
+                this.props.setApplicantId(res.data.applicantId);
+                localStorage.setItem("applicantId", res.data.applicantId);
+                navigate("/other-personal-details", {
+                  state: { applicantId: res.data.applicantId },
+                });
+              })
+              .catch((err) => {
+                console.log(err.message);
+              });
+          }
+        })
+        .catch((err) => {
           console.log(err.message);
         });
-      });
     }
   }
 
@@ -75,7 +87,7 @@ export class PersonalDetails extends Component {
       <>
         <Header />
         <div className="main-wrapper">
-        <div className="input-wrapper">
+          <div className="input-wrapper">
             <span>
               <strong>IMPORTANT !!</strong>
             </span>

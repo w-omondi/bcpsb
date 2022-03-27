@@ -113,6 +113,15 @@ app.get("/academic-qualifications/:applicantId", (req, res) => {
   });
 });
 
+app.post("/check-applicant", (req, res) => {
+  let query = `SELECT EXISTS(SELECT * FROM applicants WHERE national_id=${req.body.national_id} OR email='${req.body.email}') AS exist;`;
+  db.query(query, (err, result) => {
+    if (err) throw err;
+    console.log(result[0].exist);
+    res.json({ exist: result[0].exist });
+  });
+});
+
 app.post("/update-access", (req, res) => {
   let query = `UPDATE manage_admin SET admin_permission =${req.body.access} WHERE user_id=${req.body.userid};`;
   db.query(query, (err, result) => {

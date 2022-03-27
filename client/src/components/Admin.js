@@ -9,6 +9,8 @@ export class Admin extends Component {
 
     this.state = {
       applications: [],
+      csvArray: [],
+      csvReady: false,
       filterDate: "",
       limit: 100,
       loading: false,
@@ -17,8 +19,9 @@ export class Admin extends Component {
   componentDidMount() {
     this.Applications();
   }
+
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ limit: e.target.value });
   };
 
   getLimitedApplications = () => {
@@ -29,7 +32,9 @@ export class Admin extends Component {
       axios
         .get(`/applications/${this.state.limit}`)
         .then((response) => {
-          this.setState({ applications: response.data, loading: false });
+          this.setState({ applications: response.data, loading: false }, () => {
+            this.AddsDownloadLink();
+          });
         })
         .catch((err) => {
           console.log(err.message);
@@ -42,11 +47,27 @@ export class Admin extends Component {
     axios
       .get(`/full`)
       .then((response) => {
-        this.setState({ applications: response.data, loading: false });
+        this.setState({ applications: response.data, loading: false }, () => {
+          this.AddsDownloadLink();
+        });
       })
       .catch((err) => {
         console.log(err.message);
       });
+  };
+
+  AddsDownloadLink = () => {
+    this.setState({ csvReady: false });
+    const readyArray = this.state.applications.map((a) => {
+      if (!a.upload) {
+        return a;
+      } else {
+        let trimed = a.upload.trim();
+        a.upload = `https://job.baringo.go.ke/download-zip/${trimed}`;
+        return a;
+      }
+    });
+    this.setState({ csvArray: readyArray, csvReady: true });
   };
 
   render() {
@@ -88,18 +109,19 @@ export class Admin extends Component {
       <div className="admin" style={{ height: "100vh" }}>
         <AdminHeader />
         <div className="admin-tab">
-          <div className="control-wrapper" style={{ width: "60%" }}>
-            <div className="tabcontrol"
-            style={{
-              display:"flex",
-              flexDirection:"row"
-            }}>
+          <div style={{ width: "50%" }}>
+            <div
+              className="tabcontrol"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
               <label htmlFor="limit">Limit</label>
               <input
                 id="limit"
                 type="number"
                 onChange={this.changeHandler}
-                min={5}
                 name="limit"
                 value={this.state.limit}
                 placeholder="limit"
@@ -113,24 +135,35 @@ export class Admin extends Component {
                 FETCH
               </button>
             </div>
+          </div>
+          <div
+            style={{
+              width: "50%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
             <span
               onClick={this.Applications}
               style={{ textDecoration: "underline" }}
               className="check-applications"
             >
-              Full list
+              All applications
             </span>
-          </div>
-          <div className="control-wrapper" style={{ width: "40%" }}>
-            <CSVLink
-              style={{ color: "white", margin: "5px" }}
-              data={this.state.applications}
-              filename={"BCPSB DATA CAPTURE FORM " + Date.now()}
-            >
-              Download full .csv file
-            </CSVLink>
+            <span>
+              {this.state.csvReady ? (
+                <CSVLink
+                  style={{ color: "white", margin: "5px" }}
+                  data={this.state.csvArray}
+                  filename={"BCPSB APPLICATION RESPONSES " + Date.now()}
+                >
+                  Download Excel
+                </CSVLink>
+              ) : null}
+            </span>
             <a href="/logout" style={{ color: "white" }}>
-              LOGOUT <i className="fa fa-sign-out" />
+              LOGOUT
             </a>
           </div>
         </div>
@@ -180,9 +213,9 @@ export class Admin extends Component {
                     >
                       download
                     </button> */}
-                      <a href={`/download-zip/${colvalue.upload}`} download>
-                        Download
-                      </a>
+                      {colvalue.upload ? (
+                        <a href={colvalue.upload}>Download</a>
+                      ) : null}
                     </td>
                     {/* <td>{colvalue.academic_professional_credentials}</td> */}
                     {/* <td>{colvalue.home_county}</td>

@@ -51,7 +51,7 @@ timestamp) VALUES('${email}','${firstname}',\
 '${postal_address} ',\
 '${postal_code} ',\
 '${now}');`;
-  console.log(req.body);
+  // console.log(req.body);
   //insert into the database
   console.info(now);
   db.query(query, (err, result) => {

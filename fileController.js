@@ -39,6 +39,8 @@ const zipDownload = (req, res) => {
   } else {
     let zipPath = __dirname + `/public/uploads/${zip}`;
     console.log(zipPath);
+    res.set("Content-Type", "application/octet-stream");
+    res.set("Content-Disposition", `attachment; filename=${zip}`);
     res.download(zipPath);
   }
 };

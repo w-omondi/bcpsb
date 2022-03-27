@@ -20,18 +20,24 @@ export class FileUploader extends Component {
   };
 
   onSave = () => {
-    const formData = new FormData();
-    formData.append("applicantId", this.state.applicantId);
-    formData.append("file", this.state.files[0]);
-    this.setState({ loading: true });
-    axios
-      .post("/upload", formData)
-      .then((response) => {
-        this.setState({ success: true, loading: false });
-        this.props.setUploaded(true);
-        navigate("/")
-      })
-      .catch((err) => console.log(err.message));
+    let fileext = this.state.files[0].name.split('.')[1]
+    console.log(fileext);
+    if (fileext !== "pdf") {
+      alert("Only pdf documents allowed");
+    } else {
+      const formData = new FormData();
+      formData.append("applicantId", this.state.applicantId);
+      formData.append("file", this.state.files[0]);
+      this.setState({ loading: true });
+      axios
+        .post("/upload", formData)
+        .then((response) => {
+          this.setState({ success: true, loading: false });
+          this.props.setUploaded(true);
+          navigate("/");
+        })
+        .catch((err) => console.log(err.message));
+    }
   };
 
   render() {
