@@ -56,11 +56,10 @@ h3 {
 }
 
 .Logo {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 90px;
+    max-height: 90px;
     margin: 0px auto;
 }
-
 
 input,
 textarea,
@@ -164,7 +163,7 @@ button:active {
     width: 95%;
     margin: 0px auto;
     overflow-x: hidden;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 
@@ -206,7 +205,7 @@ button:active {
 .table-wrapper {
     width: 100%;
     overflow-x: scroll;
-    height: 70vh;
+    height: 65vh;
 }
 
 table {
@@ -219,11 +218,12 @@ thead {
     background-color: #80808025;
 }
 
-table td, table th {
+table td,
+table th {
     text-align: left;
     border: 1px solid grey;
     text-transform: uppercase;
-    padding:2px 5px;
+    padding: 2px 5px;
     font-size: x-small;
 }
 
@@ -252,13 +252,27 @@ table th {
     justify-content: flex-end;
     justify-content: space-between;
 }
-.manage{
+
+.manage {
     width: 50%;
     margin: 20px auto;
 }
 
-.manage .input-wrapper{
+.manage .input-wrapper {
     border-radius: unset;
+}
+
+.timer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #54ba4234;
+
+}
+
+.timer .counter-bars {
+    padding: 3px;
 }
 
 @media screen and (max-width:800px) {
@@ -288,7 +302,8 @@ table th {
     .main-wrapper {
         width: 90%;
     }
-    .manage{
-        width:95%;
+
+    .manage {
+        width: 95%;
     }
 }

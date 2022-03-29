@@ -1,4 +1,5 @@
 import React from "react";
+import ApplicationTimer from "./ApplicationTimer";
 
 export function Header() {
   return (
@@ -11,6 +12,7 @@ export function Header() {
       />
       <span>County Government of Baringo</span>
       <span>BCPSB JOB APPLICATION FORM</span>
+      <ApplicationTimer />
     </div>
   );
 }

@@ -6,6 +6,7 @@ export class Manage extends Component {
     super(props);
     this.state = {
       users: [],
+      loading: false,
     };
   }
 
@@ -14,10 +15,12 @@ export class Manage extends Component {
   }
 
   getUsers = () => {
+    this.setState({ loading: true });
     axios
       .get("/system-users")
       .then((res) => {
-        this.setState({ users: res.data });
+        console.log(res.data);
+        this.setState({ users: res.data, loading: false });
       })
       .catch((err) => console.log(err.message));
   };
@@ -42,14 +45,22 @@ export class Manage extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.users.map((user, i) => (
-              <AccessView
-                key={i}
-                user={user.user}
-                userid={user.user_id}
-                access={user.admin_permisson}
-              />
-            ))}
+            {this.state.loading ? (
+              <tr className="input-wrapper">
+                <span>
+                  <i className="fas fa-spinner fa-pulse" />
+                </span>
+              </tr>
+            ) : (
+              this.state.users.map((user, i) => (
+                <AccessView
+                  key={i}
+                  user={user.user}
+                  userid={user.user_id}
+                  access={user.admin_permisson}
+                />
+              ))
+            )}
           </tbody>
         </table>
         <div
@@ -57,7 +68,7 @@ export class Manage extends Component {
             width: "70%",
             margin: "20px auto",
             alignItems: "center",
-            textAlign:"center",
+            textAlign: "center",
           }}
         >
           <button

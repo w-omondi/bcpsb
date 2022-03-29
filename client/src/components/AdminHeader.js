@@ -8,7 +8,7 @@ export default function AdminHeader() {
                 <img className='Logo' src={Logo} alt="avator" />
                 <span>County Government of  Baringo</span>
             </div>
-            <span>BCPSB CAPTURED DATA</span>
+            <span>BCPSB JOB APPLICATION DATA</span>
         </div>
     )
 }

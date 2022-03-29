@@ -56,29 +56,29 @@ export class PersonalDetails extends Component {
     ) {
       alert("All fields are mandatory");
     } else {
+      // axios
+      // .post(`/check-applicant`, { national_id, email })
+      // .then((res) => {
+      //   if (res.data.exist) {
+      //     alert("You can only apply once");
+      //   } else {
       axios
-        .post(`/check-applicant`, { national_id, email })
+        .post(`/personal-data`, { data: this.state })
         .then((res) => {
-          if (res.data.exist) {
-            alert("You can only apply once");
-          } else {
-            axios
-              .post(`/personal-data`, { data: this.state })
-              .then((res) => {
-                this.props.setApplicantId(res.data.applicantId);
-                localStorage.setItem("applicantId", res.data.applicantId);
-                navigate("/other-personal-details", {
-                  state: { applicantId: res.data.applicantId },
-                });
-              })
-              .catch((err) => {
-                console.log(err.message);
-              });
-          }
+          this.props.setApplicantId(res.data.applicantId);
+          localStorage.setItem("applicantId", res.data.applicantId);
+          navigate("/other-personal-details", {
+            state: { applicantId: res.data.applicantId },
+          });
         })
         .catch((err) => {
           console.log(err.message);
         });
+      //   }
+      // })
+      // .catch((err) => {
+      //   console.log(err.message);
+      // });
     }
   }
 
