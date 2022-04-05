@@ -46,7 +46,7 @@ const zipDownload = (req, res) => {
 };
 
 const downLoadAllFiles = (req, res) => {
-  let uploadDir = fs.readdirSync(__dirname + "/public/uploads");
+  let uploadDir = fs.readdirSync(__dirname + "/public/uploads/");
   const zip = new admzip();
   for (var i = 0; i < uploadDir.length; i++) {
     zip.addLocalFile(__dirname + "/public/uploads/" + uploadDir[i]);
@@ -55,7 +55,7 @@ const downLoadAllFiles = (req, res) => {
   const downloadName = `${Date.now()}.zip`;
   const data = zip.toBuffer();
   // save file zip in root directory
-  zip.writeZip(__dirname + "/public/" + downloadName);
+  // zip.writeZip(__dirname + "/public/" + downloadName);
   // code to download zip file
   res.set("Content-Type", "application/octet-stream");
   res.set("Content-Disposition", `attachment; filename=${downloadName}`);
