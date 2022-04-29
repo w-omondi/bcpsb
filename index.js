@@ -38,7 +38,7 @@ const sessionStore = new MySQLstore(
   db
 );
 
-// app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(__dirname, "/client/build")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
@@ -130,9 +130,9 @@ app.post("/update-access", (req, res) => {
   });
 });
 
-app.get(`/`, (req, res) => {
-  res.sendFile(__dirname + "/Redirect.html");
-});
+// app.get(`/`, (req, res) => {
+//   res.sendFile(__dirname + "/Redirect.html");
+// });
 
 app.get(`/login`, (req, res) => {
   if (req.session.user) {
@@ -190,9 +190,9 @@ app.get("/full", getFullApplications);
 app.get("/download-all-files", downLoadAllFiles);
 
 // Captures unmatched routes
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "/client/build", "index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+});
 
 //Server listenning 5000
 app.listen(port, (err) => {
